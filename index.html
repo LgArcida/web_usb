@@ -17,16 +17,20 @@
 
   <div id="click"> Connect to Arduino</div>
 
+  <div id="high_btn"> Turn led on! </div>
+  <div id="low_btn"> Turn led off! </div>
+
   <script>
     serial.requestPort = () => {
       const filters = [{ 'vendorId': 0x2341, 'productId': 0x8036 }];
-      // const filters = [{'vendorId': 0x2341}];
       return navigator.usb.requestDevice({'filters': filters}).then(device => new serial.Port(device)).catch(() => console.log('Error on port request!'));
     }
 
     let port;
     let textDecoder = new TextDecoder();
     let connectButton = document.getElementById('click');
+    let ledOnButton = document.getElementById('high_btn');
+    let ledOffButton = document.getElementById('low_btn');
 
     connectButton.addEventListener('click', () => {
       if (port) {
@@ -44,6 +48,19 @@
         })
       }
     });
+
+    ledOnButton.addEventListener('click', () => {
+      if (port) {
+        port.send(textDecoder.encode('H'));
+      }
+    });
+
+    ledOffButton.addEventListener('click', () => {
+      if (port) {
+        port.send(textDecoder.encode('L'));
+      }
+    });
+
   </script>
 
 
