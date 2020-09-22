@@ -1,0 +1,52 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <script src="./libs/serial.js"></script>
+</head>
+
+<body>
+
+  <div id="click"> Connect to Arduino</div>
+
+  <script>
+    serial.requestPort = () => {
+      const filters = [{ 'vendorId': 0x2341, 'productId': 0x8036 }];
+      // const filters = [{'vendorId': 0x2341}];
+      return navigator.usb.requestDevice({'filters': filters}).then(device => new serial.Port(device)).catch(() => console.log('Error on port request!'));
+    }
+
+    let port;
+    let textDecoder = new TextDecoder();
+    let connectButton = document.getElementById('click');
+
+    connectButton.addEventListener('click', () => {
+      if (port) {
+        connectButton.textContent = 'Connected';
+        port.disconnect();
+        port = null;
+      } else {
+        serial.requestPort().then(selectedPort => {
+          port = selectedPort;
+          port.connect().then(() => {
+            console.log('Connected!');
+            connectButton.textContent = 'Diconnected';
+            port.onReceive = (data) => console.log(textDecoder.decode(data));
+          })
+        })
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>
