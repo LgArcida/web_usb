@@ -28,6 +28,7 @@
 
     let port;
     let textDecoder = new TextDecoder();
+    let textEncoder = new TextEncoder();
     let connectButton = document.getElementById('click');
     let ledOnButton = document.getElementById('high_btn');
     let ledOffButton = document.getElementById('low_btn');
@@ -51,13 +52,13 @@
 
     ledOnButton.addEventListener('click', () => {
       if (port) {
-        port.send(textDecoder.encode('H'));
+        port.send(textEncoder.encode('H'));
       }
     });
 
     ledOffButton.addEventListener('click', () => {
       if (port) {
-        port.send(textDecoder.encode('L'));
+        port.send(textEncoder.encode('L'));
       }
     });
 
