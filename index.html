@@ -16,7 +16,7 @@
 
 <body>
 
-  <button id="click" style="margin-bottom: 1em; display: block"> Connect to Arduino 5</button>
+  <button id="click" style="margin-bottom: 1em; display: block"> Connect to Arduino 7</button>
 
   <button id="high_btn" style="margin-bottom: 1em; display: block"> Turn led on! </button>
   <button id="low_btn" style="margin-bottom: 1em; display: block"> Turn led off! </button>
@@ -34,7 +34,7 @@
     }
 
     let port;
-    let textDecoder = new TextDecoder();
+    let textDecoder = new TextDecoder("utf-8");
     let textEncoder = new TextEncoder();
     let connectButton = document.getElementById('click');
     let ledOnButton = document.getElementById('high_btn');
@@ -54,8 +54,10 @@
             console.log('Connected!');
             connectButton.textContent = 'Diconnected';
             port.onReceive = (data) => {
-              alert(JSON.stringify(data));
-              dataReceived(data);
+              const decoded = textDecoder.decode(data);
+              alert(data);
+              alert(decoded);
+              // dataReceived(data);
             }
             // port.onReceive = (data) => alert(textDecoder.decode(data));
           })
