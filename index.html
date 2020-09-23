@@ -26,6 +26,8 @@
     <button id="json_btn"> JSON </button>
   </div>
 
+  <div id="result"></div>
+
 
   <script>
     serial.requestPort = () => {
@@ -41,6 +43,14 @@
     let ledOffButton = document.getElementById('low_btn');
     let jsonButton = document.getElementById('json_btn');
     let strInput = document.getElementById('str_in');
+    let resultArea = document.getElementById('result');
+
+    function addResult(txt) {
+      const node = document.createElement("DIV");
+      const textNode = document.createTextNode(txt);
+      node.appendChild(textNode);
+      resultArea.appendChild(node);
+    }
 
     connectButton.addEventListener('click', () => {
       if (port) {
@@ -55,8 +65,7 @@
             connectButton.textContent = 'Diconnected';
             port.onReceive = (data) => {
               const decoded = textDecoder.decode(data);
-              alert(data);
-              alert(decoded);
+              addResult(decoded);
               // dataReceived(data);
             }
             // port.onReceive = (data) => alert(textDecoder.decode(data));
