@@ -100,8 +100,8 @@ const jsonInput = {
   }
 }
 
-function* chunk(inputStr, maxBytes) {
-  const decoder = new TextDecoder("utf-8");
+function chunk(inputStr, maxBytes) {
+  // const decoder = new TextDecoder("utf-8");
   let buf = new TextEncoder("utf-8").encode(inputStr);
   const result = [];
   while (buf.length) {
@@ -133,5 +133,4 @@ function dataReceived(data) {
   const decoder = new TextDecoder("utf-8");
   const msg = new Uint8Array(data);
   alert(decoder.decode(msg));
-
 }
