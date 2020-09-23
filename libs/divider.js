@@ -100,7 +100,7 @@ const jsonInput = {
   }
 }
 
-function chunk(inputStr, maxBytes) {
+function* chunk(inputStr, maxBytes) {
   const decoder = new TextDecoder("utf-8");
   let buf = new TextEncoder("utf-8").encode(inputStr);
   const result = [];
@@ -126,4 +126,12 @@ function dummyJson() {
   // const str = JSON.stringify(jsonInput);
   const str = "Hello Du from Arduino and stuff over USB and web!";
   return chunk(str, 250);
+}
+
+
+function dataReceived(data) {
+  const decoder = new TextDecoder("utf-8");
+  const msg = new Uint8Array(data);
+  alert(decoder.decode(msg));
+
 }

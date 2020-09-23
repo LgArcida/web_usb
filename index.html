@@ -24,7 +24,7 @@
 
   <script>
     serial.requestPort = () => {
-      const filters = [{ 'vendorId': 0x2341, 'productId': 0x8036 }];
+      const filters = [{'vendorId': 0x2341, 'productId': 0x8036}];
       return navigator.usb.requestDevice({'filters': filters}).then(device => new serial.Port(device)).catch(() => console.log('Error on port request!'));
     }
 
@@ -47,7 +47,8 @@
           port.connect().then(() => {
             console.log('Connected!');
             connectButton.textContent = 'Diconnected';
-            port.onReceive = (data) => alert(textDecoder.decode(data));
+            port.onReceive = (data) => dataReceived(data);
+            // port.onReceive = (data) => alert(textDecoder.decode(data));
           })
         })
       }
