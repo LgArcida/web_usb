@@ -53,7 +53,10 @@
           port.connect().then(() => {
             console.log('Connected!');
             connectButton.textContent = 'Diconnected';
-            port.onReceive = (data) => dataReceived(data);
+            port.onReceive = (data) => {
+              alert(JSON.stringify(data));
+              dataReceived(data);
+            }
             // port.onReceive = (data) => alert(textDecoder.decode(data));
           })
         })
