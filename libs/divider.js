@@ -123,6 +123,7 @@ function chunk(inputStr, maxBytes) {
 // console.log(chunk(str, 250))
 
 function dummyJson() {
-  const str = JSON.stringify(jsonInput);
+  // const str = JSON.stringify(jsonInput);
+  const str = "Hello Du from Arduino and stuff over USB and web!";
   return chunk(str, 250);
 }
