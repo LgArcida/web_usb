@@ -16,7 +16,7 @@
 
 <body>
 
-  <button id="click" style="margin-bottom: 1em; display: block"> Connect to Arduino</button>
+  <button id="click" style="margin-bottom: 1em; display: block"> Connect to Arduino Leo!</button>
 
   <button id="high_btn" style="margin-bottom: 1em; display: block"> Turn led on! </button>
   <button id="low_btn" style="margin-bottom: 1em; display: block"> Turn led off! </button>
@@ -47,7 +47,7 @@
           port.connect().then(() => {
             console.log('Connected!');
             connectButton.textContent = 'Diconnected';
-            port.onReceive = (data) => console.log(textDecoder.decode(data));
+            port.onReceive = (data) => alert(textDecoder.decode(data));
           })
         })
       }
