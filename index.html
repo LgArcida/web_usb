@@ -89,13 +89,12 @@
     jsonButton.addEventListener('click', () => {
       const txt = strInput.value;
       if (port) {
-        port.send(textEncoder.encode('Logan'));
-        port.send(textEncoder.encode('~'));
-        /*const data = dummyJson(txt);
+        // port.send(textEncoder.encode('Logan'));
+        const data = dummyJson(txt);
         for (let item of data) {
           port.send(item);
-          port.send('~');
-        }*/
+        }
+        port.send(textEncoder.encode('~'));
       }
     });
 
