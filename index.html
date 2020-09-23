@@ -16,7 +16,7 @@
 
 <body>
 
-  <button id="click" style="margin-bottom: 1em; display: block"> Connect to Arduino 4</button>
+  <button id="click" style="margin-bottom: 1em; display: block"> Connect to Arduino 5</button>
 
   <button id="high_btn" style="margin-bottom: 1em; display: block"> Turn led on! </button>
   <button id="low_btn" style="margin-bottom: 1em; display: block"> Turn led off! </button>
@@ -78,13 +78,12 @@
     jsonButton.addEventListener('click', () => {
       const txt = strInput.value;
       if (port) {
-        const data = dummyJson(txt);
-        // port.send(textEncoder.encode('** INIT JSON **'));
+        port.send(textEncoder.encode('DU'));
+        /*const data = dummyJson(txt);
         for (let item of data) {
           port.send(item);
           port.send('~');
-        }
-        // port.send(textEncoder.encode('** END JSON **'));
+        }*/
       }
     });
 
