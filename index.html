@@ -89,7 +89,7 @@
     jsonButton.addEventListener('click', () => {
       const txt = strInput.value;
       if (port) {
-        port.send(textEncoder.encode('DU'));
+        port.send(textEncoder.encode('Logan'));
         port.send(textEncoder.encode('~'));
         /*const data = dummyJson(txt);
         for (let item of data) {
