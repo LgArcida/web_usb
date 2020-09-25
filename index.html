@@ -10,24 +10,20 @@
   <meta property="og:type" content="">
   <meta property="og:url" content="">
   <meta property="og:image" content="">
+  <script src="./libs/lodash.js"></script>
   <script src="./libs/serial.js"></script>
-  <script src="./libs/divider.js"></script>
+  <script src="libs/controller.js"></script>
 </head>
 
 <body>
 
-  <button id="click" style="margin-bottom: 1em; display: block"> Connect to Arduino 7</button>
+  <button id="click" style="margin-bottom: 1em; display: block"> Connect to Arduino 8</button>
 
   <button id="high_btn" style="margin-bottom: 1em; display: block"> Turn led on! </button>
   <button id="low_btn" style="margin-bottom: 1em; display: block"> Turn led off! </button>
-
-  <div style="margin-bottom: 1em; display: block">
-    <input id="str_in" type="text" value="Hello Du from WEB to arduino Leonardo!">
-    <button id="json_btn"> JSON </button>
-  </div>
+  <button id="json_btn" style="margin-bottom: 1em; display: block"> JSON </button>
 
   <div id="result"></div>
-
 
   <script>
     serial.requestPort = () => {
@@ -42,7 +38,6 @@
     let ledOnButton = document.getElementById('high_btn');
     let ledOffButton = document.getElementById('low_btn');
     let jsonButton = document.getElementById('json_btn');
-    let strInput = document.getElementById('str_in');
     let resultArea = document.getElementById('result');
 
     function addResult(txt) {
@@ -66,7 +61,6 @@
             port.onReceive = (data) => {
               const decoded = textDecoder.decode(data);
               addResult(decoded);
-              // dataReceived(data);
             }
             // port.onReceive = (data) => alert(textDecoder.decode(data));
           })
@@ -87,9 +81,8 @@
     });
 
     jsonButton.addEventListener('click', () => {
-      const txt = strInput.value;
       if (port) {
-        const data = dummyJson(txt);
+        const data = jsonChunk();
         for (let item of data) {
           port.send(item);
         }

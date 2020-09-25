@@ -101,36 +101,34 @@ const jsonInput = {
 }
 
 function chunk(inputStr, maxBytes) {
-  // const decoder = new TextDecoder("utf-8");
   let buf = new TextEncoder("utf-8").encode(inputStr);
   const result = [];
   while (buf.length) {
     let i = buf.lastIndexOf(32, maxBytes + 1);
-    // If no space found, try forward search
     if (i < 0) i = buf.indexOf(32, maxBytes);
-    // If there's no space at all, take all
     if (i < 0) i = buf.length;
-    // This is a safe cut-off point; never half-way a multi-byte
-    // yield decoder.decode(buf.slice(0, i));
     result.push(buf.slice(0, i))
     buf = buf.slice(i + 1); // Skip space (if any)
   }
   return result;
 }
 
-// for (let s of chunk(JSON.stringify(jsonInput), 250)) console.log(s);
-// const str = JSON.stringify(jsonInput)
-// console.log(chunk(str, 250))
+function jsonChunk() {
+  const maxBytes = 250;
+  const jsonStr = JSON.stringify(jsonInput);
+  const encoder = new TextEncoder("utf-8");
+  const encodedJson = encoder.encode(jsonStr);
+  return _.chunk(encodedJson, maxBytes);
+}
 
-function dummyJson(str) {
-  str = JSON.stringify(jsonInput);
-  // const str = "Hello Du from Arduino and stuff over USB and web!";
+function dummyJsonDivided() {
+  const str = JSON.stringify(jsonInput);
   return chunk(str, 250);
 }
 
-
-function dataReceived(data) {
-  const decoder = new TextDecoder("utf-8");
-  const msg = new Uint8Array(data);
-  alert(decoder.decode(msg));
+function dummyJson() {
+  const encoder = new TextEncoder("utf-8");
+  const str = JSON.stringify(jsonInput);
+  return encoder.encode(str);
 }
+
