@@ -85,6 +85,7 @@
             console.log('Connected!');
             connectButton.textContent = 'Diconnected';
             port.onReceive = (data) => {
+              addResult(data);
               const decoded = textDecoder.decode(data);
               addResult(decoded);
             }
@@ -109,14 +110,14 @@
     jsonButton.addEventListener('click', () => {
       if (port) {
         const data = jsonChunk();
-        addOutput(data);
-        port.send(data);
-        port.send(textEncoder.encode('~'));
-        /*for (let item of data) {
+        // port.send(data);
+        // port.send(textEncoder.encode('~'));
+
+        _.forEach(data, (v, k) => {
           addOutput(data);
-          // port.send(item);
+          port.send(v);
           port.send(textEncoder.encode('~'));
-        }*/
+        })
       }
     });
 
