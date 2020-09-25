@@ -27,7 +27,7 @@
 
 <body>
 
-  <button id="click" class="btn"> Connect to Arduino 11</button>
+  <button id="click" class="btn"> Connect to Arduino 12</button>
 
   <button id="high_btn" class="btn"> Turn led on! </button>
   <button id="low_btn" class="btn"> Turn led off! </button>
@@ -112,8 +112,8 @@
         for (let item of data) {
           addOutput(data);
           port.send(item);
+          port.send(textEncoder.encode('~'));
         }
-        port.send(textEncoder.encode('~'));
       }
     });
 
