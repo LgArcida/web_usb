@@ -112,10 +112,12 @@
         const data = jsonChunk();
         // port.send(data);
         // port.send(textEncoder.encode('~'));
+        addOutput(data);
+        addOutput('------------------------------------');
 
         _.forEach(data, (v, k) => {
-          addOutput(data);
-          port.send(v);
+          addOutput(k);
+          port.send(k);
           port.send(textEncoder.encode('~'));
         })
       }
