@@ -27,7 +27,7 @@
 
 <body>
 
-  <button id="click" class="btn"> Connect to Arduino 12</button>
+  <button id="click" class="btn"> Connect to Arduino 13</button>
 
   <button id="high_btn" class="btn"> Turn led on! </button>
   <button id="low_btn" class="btn"> Turn led off! </button>
@@ -109,11 +109,15 @@
     jsonButton.addEventListener('click', () => {
       if (port) {
         const data = jsonChunk();
-        for (let item of data) {
+        _.forEach(data, (v, k) => {
+          port.send(v);
+          port.send(textEncoder.encode('~'));
+        });
+        /*for (let item of data) {
           addOutput(data);
           port.send(item);
           port.send(textEncoder.encode('~'));
-        }
+        }*/
       }
     });
 
