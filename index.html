@@ -87,7 +87,7 @@
             port.onReceive = (data) => {
               const decoded = textDecoder.decode(data);
               addResult(decoded);
-              addOutput('------------------------------------');
+              addResult('------------------------------------');
             }
             // port.onReceive = (data) => alert(textDecoder.decode(data));
           })
