@@ -85,9 +85,9 @@
             console.log('Connected!');
             connectButton.textContent = 'Diconnected';
             port.onReceive = (data) => {
-              addResult(data);
               const decoded = textDecoder.decode(data);
               addResult(decoded);
+              addOutput('------------------------------------');
             }
             // port.onReceive = (data) => alert(textDecoder.decode(data));
           })
@@ -114,12 +114,11 @@
         // port.send(textEncoder.encode('~'));
         addOutput(data);
         addOutput('------------------------------------');
-
         _.forEach(data, (v, k) => {
           addOutput(k);
           port.send(k);
-          port.send(textEncoder.encode('~'));
-        })
+        });
+        port.send(textEncoder.encode('~'));
       }
     });
 
