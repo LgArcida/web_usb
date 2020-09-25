@@ -109,11 +109,14 @@
     jsonButton.addEventListener('click', () => {
       if (port) {
         const data = jsonChunk();
-        for (let item of data) {
+        addOutput(data);
+        port.send(data);
+        port.send(textEncoder.encode('~'));
+        /*for (let item of data) {
           addOutput(data);
           // port.send(item);
           port.send(textEncoder.encode('~'));
-        }
+        }*/
       }
     });
 
