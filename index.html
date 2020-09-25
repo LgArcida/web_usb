@@ -115,7 +115,7 @@
         addOutput(data);
         addOutput('------------------------------------');
         _.forEach(data, (v, k) => {
-          addOutput('~');
+          addOutput(k);
           port.send(textEncoder.encode(k));
           port.send(textEncoder.encode('~'));
         });
