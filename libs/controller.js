@@ -113,6 +113,27 @@ function chunk(inputStr, maxBytes) {
   return result;
 }
 
+
+function chunkDu() {
+  const maxBytes = 250;
+  const jsonStr = JSON.stringify(jsonInput);
+  const encoder = new TextEncoder("utf-8");
+  let encodedJson = encoder.encode(jsonStr);
+  let idx;
+  let result = [];
+
+  while (encodedJson.length > 0) {
+    if (encodedJson.length >= maxBytes) {
+      idx = maxBytes;
+    } else {
+      idx = encodedJson.length;
+    }
+    result.push(encodedJson.slice(0, idx));
+    encodedJson = encodedJson.slice(idx);
+  }
+  return result;
+}
+
 function jsonChunk() {
   const maxBytes = 250;
   const jsonStr = JSON.stringify(jsonInput);
