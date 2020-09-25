@@ -118,7 +118,8 @@ function jsonChunk() {
   const jsonStr = JSON.stringify(jsonInput);
   const encoder = new TextEncoder("utf-8");
   const encodedJson = encoder.encode(jsonStr);
-  return _.chunk(encodedJson, maxBytes);
+  const data = Array.from(encodedJson);
+  return _.chunk(data, maxBytes);
 }
 
 function dummyJsonDivided() {
