@@ -13,17 +13,35 @@
   <script src="./libs/lodash.js"></script>
   <script src="./libs/serial.js"></script>
   <script src="libs/controller.js"></script>
+  <style>
+    .btn {
+      margin-bottom: 1em;
+      display: block
+    }
+
+    .cnt {
+      margin-bottom: 2em;
+    }
+  </style>
 </head>
 
 <body>
 
-  <button id="click" style="margin-bottom: 1em; display: block"> Connect to Arduino 9</button>
+  <button id="click" class="btn"> Connect to Arduino 10</button>
 
-  <button id="high_btn" style="margin-bottom: 1em; display: block"> Turn led on! </button>
-  <button id="low_btn" style="margin-bottom: 1em; display: block"> Turn led off! </button>
-  <button id="json_btn" style="margin-bottom: 1em; display: block"> JSON </button>
+  <button id="high_btn" class="btn"> Turn led on! </button>
+  <button id="low_btn" class="btn"> Turn led off! </button>
+  <button id="json_btn" class="btn"> JSON </button>
 
-  <div id="result"></div>
+  <div class="cnt">
+    <h4> <strong> Output </strong></h4>
+    <div id="output"></div>
+  </div>
+
+  <div class="cnt">
+    <h4> <strong> Result </strong></h4>
+    <div id="result"></div>
+  </div>
 
   <script>
     serial.requestPort = () => {
@@ -38,7 +56,15 @@
     let ledOnButton = document.getElementById('high_btn');
     let ledOffButton = document.getElementById('low_btn');
     let jsonButton = document.getElementById('json_btn');
+    let outputArea = document.getElementById('output');
     let resultArea = document.getElementById('result');
+
+    function addOutput(txt) {
+      const node = document.createElement("DIV");
+      const textNode = document.createTextNode(txt);
+      node.appendChild(textNode);
+      outputArea.appendChild(node);
+    }
 
     function addResult(txt) {
       const node = document.createElement("DIV");
@@ -84,6 +110,7 @@
       if (port) {
         const data = jsonChunk();
         for (let item of data) {
+          addOutput(data);
           port.send(item);
         }
         port.send(textEncoder.encode('~'));
