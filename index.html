@@ -32,6 +32,7 @@
   <button id="high_btn" class="btn"> Turn led on! </button>
   <button id="low_btn" class="btn"> Turn led off! </button>
   <button id="json_btn" class="btn"> JSON </button>
+  <button id="rock7_btn" class="btn"> Test Rock 7 </button>
 
   <div class="cnt">
     <h4> <strong> Output </strong></h4>
@@ -56,6 +57,7 @@
     let ledOnButton = document.getElementById('high_btn');
     let ledOffButton = document.getElementById('low_btn');
     let jsonButton = document.getElementById('json_btn');
+    let rock7Button = document.getElementById('rock7_btn');
     let outputArea = document.getElementById('output');
     let resultArea = document.getElementById('result');
 
@@ -110,8 +112,6 @@
     jsonButton.addEventListener('click', () => {
       if (port) {
         const data = chunkDu();
-        // port.send(data);
-        // port.send(textEncoder.encode('~'));
         addOutput(data);
         addOutput('------------------------------------');
         _.forEach(data, (v, k) => {
@@ -121,6 +121,10 @@
           port.send(textEncoder.encode('~'));
         });
       }
+    });
+
+    rock7Button.addEventListener('click', () => {
+      port.send(textEncoder.encode('~'));
     });
 
   </script>
