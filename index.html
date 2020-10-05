@@ -34,6 +34,7 @@
   <button id="json_btn" class="btn"> JSON </button>
   <button id="rock7_btn" class="btn"> Connect Rock7 </button>
   <button id="rock7_test_btn" class="btn"> Test Rock7 </button>
+  <button id="master_slave_btn" class="btn"> Master/Slave </button>
 
   <div class="cnt">
     <h4> <strong> Output </strong></h4>
@@ -60,6 +61,7 @@
     let jsonButton = document.getElementById('json_btn');
     let rock7Button = document.getElementById('rock7_btn');
     let rock7TestButton = document.getElementById('rock7_test_btn');
+    let masterSlaveButton = document.getElementById('master_slave_btn');
     let outputArea = document.getElementById('output');
     let resultArea = document.getElementById('result');
 
@@ -130,6 +132,14 @@
     });
 
     rock7TestButton.addEventListener('click', () => {
+      port.send(textEncoder.encode('~'));
+    });
+
+    masterSlaveButton.addEventListener('click', () => {
+      const txt = 'LOGAN';
+      for (let i = 0; i < txt.length; i++) {
+        port.send(textEncoder.encode(txt.charAt(i)));
+      }
       port.send(textEncoder.encode('~'));
     });
 
