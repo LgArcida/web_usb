@@ -140,7 +140,7 @@
       for (let i = 0; i < txt.length; i++) {
         port.send(textEncoder.encode(txt.charAt(i)));
       }
-      port.send(textEncoder.encode('~'));
+      port.send(textEncoder.encode('#'));
     });
 
   </script>
