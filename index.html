@@ -48,7 +48,7 @@
 
   <script>
     serial.requestPort = () => {
-      const filters = [{'vendorId': 0x2341, 'productId': 0x8036}];
+      const filters = [{'vendorId': 0x2341, 'productId': 0x8036}, {'vendorId': 0x2341, 'productId': 0x8037}];
       return navigator.usb.requestDevice({'filters': filters}).then(device => new serial.Port(device)).catch(() => console.log('Error on port request!'));
     }
 
