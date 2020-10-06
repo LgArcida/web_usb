@@ -43,12 +43,15 @@ function addBleResult(txt) {
 bleConnectButton.onclick = () => {
   navigator.bluetooth.requestDevice({filters: [{services: [primaryServiceUuid]}]})
     .then(device => {
+      bleDevice = device;
       addBleResult(`> Name: ${device.name}`);
       addBleResult(`> Id: ${device.id}`);
       addBleResult(`> Connected: ${device.gatt.connected}`);
+      bleStatus.innerText = 'Connected';
     })
     .catch(error => {
       addBleResult(`Argh! ${error}`);
+      bleStatus.innerText = 'ERROR!';
     });
 
   device.ongattserverdisconnected = disconnect;
@@ -57,8 +60,6 @@ bleConnectButton.onclick = () => {
 
 
 const disconnect = () => {
-  device = null;
-  receiveCharacteristic = null;
-  sendCharacteristic = null;
+  bleDevice = null;
   bleStatus.innerText = 'Disconnected';
 };
