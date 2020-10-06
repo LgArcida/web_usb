@@ -11,9 +11,24 @@
   <meta property="og:url" content="">
   <meta property="og:image" content="">
   <script src="./libs/lodash.js"></script>
+
   <script src="./libs/serial.js"></script>
-  <script src="libs/controller.js"></script>
+
   <style>
+
+    body {
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    .usb-cnt {
+      width: 50%;
+    }
+
+    .ble-cnt {
+      width: 50%;
+    }
+
     .btn {
       margin-bottom: 1em;
       display: block
@@ -27,124 +42,65 @@
 
 <body>
 
-  <button id="click" class="btn"> Connect to Arduino 15</button>
+  <!-- #################  USB Arduino connection #############3 -->
+  <div class="usb-cnt">
+    <h3> USB </h3>
+    <button id="usb-connect" class="btn"> Connect to Arduino USB</button>
+    <button id="json_btn" class="btn"> JSON </button>
+    <button id="rock7_btn" class="btn"> Connect Rock7 </button>
+    <button id="rock7_test_btn" class="btn"> Test Rock7 </button>
+    <button id="master_slave_btn" class="btn"> Master/Slave </button>
 
-  <button id="high_btn" class="btn"> Turn led on! </button>
-  <button id="low_btn" class="btn"> Turn led off! </button>
-  <button id="json_btn" class="btn"> JSON </button>
-  <button id="rock7_btn" class="btn"> Connect Rock7 </button>
-  <button id="rock7_test_btn" class="btn"> Test Rock7 </button>
-  <button id="master_slave_btn" class="btn"> Master/Slave </button>
+    <div class="cnt">
+      <h4> <strong> USB Output </strong></h4>
+      <div id="output"></div>
+    </div>
 
-  <div class="cnt">
-    <h4> <strong> Output </strong></h4>
-    <div id="output"></div>
+    <div class="cnt">
+      <h4> <strong> USB Result </strong></h4>
+      <div id="result"></div>
+    </div>
   </div>
 
-  <div class="cnt">
-    <h4> <strong> Result </strong></h4>
-    <div id="result"></div>
+  <!-- #################  USB Arduino connection #############3 -->
+  <div class="ble-cnt">
+    <h3> BTE </h3>
+    <h3 id="status-cnt"> ---- </h3>
+    <button id="ble-connect" class="btn"> Connect to Arduino BTE</button>
+
+    <div class="cnt">
+      <h4> <strong> USB Output </strong></h4>
+      <div id="ble-output"></div>
+    </div>
+
+    <div class="cnt">
+      <h4> <strong> USB Result </strong></h4>
+      <div id="ble-result"></div>
+    </div>
   </div>
 
+  <!-- USB VARS -->
   <script>
-    serial.requestPort = () => {
-      const filters = [{'vendorId': 0x2341, 'productId': 0x8036}, {'vendorId': 0x2341, 'productId': 0x8037}];
-      return navigator.usb.requestDevice({'filters': filters}).then(device => new serial.Port(device)).catch(() => console.log('Error on port request!'));
-    }
-
     let port;
-    let textDecoder = new TextDecoder("utf-8");
-    let textEncoder = new TextEncoder();
-    let connectButton = document.getElementById('click');
-    let ledOnButton = document.getElementById('high_btn');
-    let ledOffButton = document.getElementById('low_btn');
+    let usbConnectButton = document.getElementById('usb-connect');
     let jsonButton = document.getElementById('json_btn');
     let rock7Button = document.getElementById('rock7_btn');
     let rock7TestButton = document.getElementById('rock7_test_btn');
     let masterSlaveButton = document.getElementById('master_slave_btn');
     let outputArea = document.getElementById('output');
     let resultArea = document.getElementById('result');
-
-    function addOutput(txt) {
-      const node = document.createElement("DIV");
-      const textNode = document.createTextNode(txt);
-      node.appendChild(textNode);
-      outputArea.appendChild(node);
-    }
-
-    function addResult(txt) {
-      const node = document.createElement("DIV");
-      const textNode = document.createTextNode(txt);
-      node.appendChild(textNode);
-      resultArea.appendChild(node);
-    }
-
-    connectButton.addEventListener('click', () => {
-      if (port) {
-        connectButton.textContent = 'Connected';
-        port.disconnect();
-        port = null;
-      } else {
-        serial.requestPort().then(selectedPort => {
-          port = selectedPort;
-          port.connect().then(() => {
-            console.log('Connected!');
-            connectButton.textContent = 'Diconnected';
-            port.onReceive = (data) => {
-              const decoded = textDecoder.decode(data);
-              addResult(decoded);
-              addResult('------------------------------------');
-            }
-            // port.onReceive = (data) => alert(textDecoder.decode(data));
-          })
-        })
-      }
-    });
-
-    ledOnButton.addEventListener('click', () => {
-      if (port) {
-        port.send(textEncoder.encode('H'));
-      }
-    });
-
-    ledOffButton.addEventListener('click', () => {
-      if (port) {
-        port.send(textEncoder.encode('L'));
-      }
-    });
-
-    jsonButton.addEventListener('click', () => {
-      if (port) {
-        const data = chunkDu();
-        addOutput(data);
-        addOutput('------------------------------------');
-        _.forEach(data, (v, k) => {
-          addOutput(k);
-          addOutput(v);
-          port.send(v);
-          port.send(textEncoder.encode('~'));
-        });
-      }
-    });
-
-    rock7Button.addEventListener('click', () => {
-      port.send(textEncoder.encode('$'));
-    });
-
-    rock7TestButton.addEventListener('click', () => {
-      port.send(textEncoder.encode('~'));
-    });
-
-    masterSlaveButton.addEventListener('click', () => {
-      const txt = 'LOGAN';
-      for (let i = 0; i < txt.length; i++) {
-        port.send(textEncoder.encode(txt.charAt(i)));
-      }
-      port.send(textEncoder.encode('~'));
-    });
-
   </script>
+  <script src="libs/usb/utils.js"></script>
+  <script src="libs/usb/controller.js"></script>
 
+  <!-- BLE VARS -->
+  <script>
+    let bleConnectButton = document.getElementById('ble-connect');
+    let bleOutputArea = document.getElementById('ble-output');
+    let bleResultArea = document.getElementById('ble-result');
+    let bleStatus = document.getElementById('status-cnt');
+  </script>
+  <script src="libs/ble/controller.js"></script>
 
 </body>
 
