@@ -54,9 +54,6 @@ bleConnectButton.onclick = () => {
       addBleResult(`Argh! ${error}`);
       bleStatus.innerText = 'ERROR!';
     });
-
-  device.ongattserverdisconnected = disconnect;
-  bleStatus.innerHTML = 'Not connected';
 };
 
 
