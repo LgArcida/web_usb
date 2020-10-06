@@ -48,6 +48,7 @@ bleConnectButton.onclick = () => {
       addBleResult(`> Id: ${device.id}`);
       addBleResult(`> Connected: ${device.gatt.connected}`);
       bleStatus.innerText = 'Connected';
+      bleDevice.ongattserverdisconnected = disconnect;
     })
     .catch(error => {
       addBleResult(`Argh! ${error}`);
