@@ -6,9 +6,7 @@ let device, sendCharacteristic, receiveCharacteristic;
 bleConnectButton.onclick = async () => {
   device = await navigator.bluetooth
     .requestDevice({
-      filters: [{
-        services: [primaryServiceUuid]
-      }]
+      filters: []
     });
   const server = await device.gatt.connect();
   const service =
